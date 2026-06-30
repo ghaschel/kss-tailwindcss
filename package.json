@@ -1,6 +1,6 @@
 {
   "name": "kss-tailwindcss",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Tailwind CSS powered KSS 3.x builder with static assets and a technical documentation UI.",
   "main": "builder.js",
   "type": "commonjs",
