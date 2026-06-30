@@ -1,0 +1,73 @@
+{
+  "name": "kss-tailwindcss",
+  "version": "1.0.0",
+  "description": "A Tailwind CSS powered KSS 3.x builder with static assets and a technical documentation UI.",
+  "main": "builder.js",
+  "type": "commonjs",
+  "files": [
+    "README.md",
+    "builder.js",
+    "index.hbs",
+    "kss-assets",
+    "src"
+  ],
+  "scripts": {
+    "build": "tailwindcss -i src/kss-theme.css -o kss-assets/kss-theme.css --minify",
+    "prepack": "npm run build",
+    "pack:check": "npm pack --dry-run",
+    "release:initial": "git fetch --tags --force && $ bunx -- commit-and-tag-version --release-as v1.0.0",
+    "release": "git fetch --tags --force && commit-and-tag-version",
+    "push": "git push --follow-tags",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "kss",
+    "kss-node",
+    "tailwind",
+    "tailwindcss",
+    "styleguide",
+    "documentation"
+  ],
+  "peerDependencies": {
+    "kss": "^3.1.0"
+  },
+  "dependencies": {
+    "highlight.js": "^10.4.1",
+    "lucide-static": "^1.22.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.0",
+    "@commitlint/config-conventional": "^21.2.0",
+    "@tailwindcss/cli": "^4.3.2",
+    "commit-and-tag-version": "^12.7.3",
+    "cz-git": "^1.13.1",
+    "husky": "^9.1.7",
+    "kss": "^3.1.0",
+    "remark": "^15.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
+    "tailwindcss": "^4.3.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Guilherme Haschel",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18"
+  },
+  "bugs": {
+    "url": "https://github.com/ghaschel/kss-tailwindcss/issues"
+  },
+  "homepage": "https://github.com/ghaschel/kss-tailwindcss#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ghaschel/kss-tailwindcss.git"
+  },
+  "sideEffects": false,
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  }
+}

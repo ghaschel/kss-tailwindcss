@@ -1,0 +1,4 @@
+This directory is copied into generated KSS output.
+
+Edit Tailwind source in packages/kss-tailwind-builder/src/kss-theme.css and run
+`npm run build:kss-theme` to regenerate kss-theme.css.

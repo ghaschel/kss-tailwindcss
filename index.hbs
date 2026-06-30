@@ -1,0 +1,325 @@
+<!doctype html>
+<html class="scrollbar scroll-smooth" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{options.title}}</title>
+    <meta name="description" content="{{options.title}} API style guide" />
+    <meta name="generator" content="kss-node" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var stored = localStorage.getItem("kss-theme") || "system";
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle(
+          "dark",
+          stored === "dark" || (stored === "system" && prefersDark)
+        );
+        document.documentElement.dataset.kssTheme = stored;
+      })();
+    </script>
+    <link rel="icon" href="kss-assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="kss-assets/kss-theme.css" />
+    {{{styles}}}
+  </head>
+  <body id="kss-node" class="bg-neutral-50 text-neutral-950 antialiased dark:bg-neutral-950 dark:text-neutral-50">
+    <script id="kss-search-index" type="application/json">{{{searchIndex}}}</script>
+
+    <div class="min-h-screen lg:grid lg:grid-cols-[20rem_minmax(0,1fr)]">
+      <div class="fixed inset-0 z-30 hidden bg-neutral-950/45 backdrop-blur-sm lg:hidden" data-kss-drawer-overlay></div>
+
+      <aside id="kss-sidebar" class="fixed inset-y-0 left-0 z-40 flex w-80 -translate-x-full flex-col border-r border-neutral-200 bg-white/95 shadow-2xl shadow-neutral-950/10 backdrop-blur transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:shadow-none dark:border-neutral-800 dark:bg-neutral-950/95" data-kss-drawer>
+        <div class="flex items-center justify-between border-b border-neutral-200 px-5 py-4 dark:border-neutral-800">
+          <a class="group min-w-0" href="./">
+            <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300">Style guide</span>
+            <span class="mt-1 block truncate text-lg font-semibold text-neutral-950 dark:text-white">{{options.title}}</span>
+          </a>
+          <button class="inline-flex size-9 items-center justify-center rounded-md border border-neutral-200 text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-teal-500 lg:hidden dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900" type="button" data-kss-drawer-close aria-label="Close navigation">
+            {{{icon "x" "size-4"}}}
+          </button>
+        </div>
+
+        <div class="border-b border-neutral-200 p-4 dark:border-neutral-800">
+          <label class="sr-only" for="kss-search">Search documentation</label>
+          <div class="relative">
+            {{{icon "search" "pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-neutral-400"}}}
+            <input id="kss-search" class="h-10 w-full rounded-md border border-neutral-200 bg-neutral-50 pl-9 pr-3 text-sm text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-teal-500 focus:bg-white focus:ring-2 focus:ring-teal-500/20 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-50 dark:focus:bg-neutral-950" type="search" placeholder="Search APIs" autocomplete="off" data-kss-search />
+          </div>
+          <div class="scrollbar mt-2 hidden max-h-80 overflow-auto rounded-md border border-neutral-200 bg-white text-sm shadow-lg dark:border-neutral-800 dark:bg-neutral-900" data-kss-search-results></div>
+        </div>
+
+        <nav class="scrollbar min-h-0 flex-1 overflow-auto px-3 py-4" aria-label="Style guide navigation">
+          <a class="kss-nav-link {{#if template.isHomepage}}is-active{{/if}}" href="./" data-kss-nav-item data-kss-nav-text="Overview {{options.title}}">
+            <span class="kss-nav-ref">0</span>
+            <span class="truncate">Overview</span>
+          </a>
+
+          {{#each menu}}
+            <div class="mt-1" data-kss-nav-item data-kss-nav-text="{{plain header}} {{referenceNumber}}">
+              <a class="kss-nav-link {{#if isActive}}is-active{{/if}}" href="section-{{referenceURI}}.html">
+                <span class="kss-nav-ref">{{referenceNumber}}</span>
+                <span class="truncate">{{header}}</span>
+              </a>
+
+              {{#if children}}
+                <div class="ml-4 mt-1 space-y-0.5 border-l border-neutral-200 pl-2 dark:border-neutral-800">
+                  {{#each children}}
+                    <a class="kss-nav-link kss-nav-link-child" href="section-{{../referenceURI}}.html#kssref-{{referenceURI}}" data-kss-nav-item data-kss-nav-text="{{plain header}} {{referenceNumber}}">
+                      <span class="kss-nav-ref">{{referenceNumber}}</span>
+                      <span class="truncate">{{header}}</span>
+                    </a>
+                  {{/each}}
+                </div>
+              {{/if}}
+            </div>
+          {{/each}}
+        </nav>
+      </aside>
+
+      <main class="min-w-0">
+        <header class="sticky top-0 z-20 border-b border-neutral-200 bg-neutral-50/90 px-4 py-3 backdrop-blur lg:px-8 dark:border-neutral-800 dark:bg-neutral-950/88">
+          <div class="mx-auto flex max-w-[118rem] items-center gap-3">
+            <button class="inline-flex size-10 items-center justify-center rounded-md border border-neutral-200 bg-white text-neutral-700 transition hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-teal-500 lg:hidden dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800" type="button" data-kss-drawer-toggle aria-controls="kss-sidebar" aria-expanded="false" aria-label="Open navigation">
+              {{{icon "menu" "size-4"}}}
+            </button>
+
+            <div class="min-w-0 flex-1">
+              <div class="truncate text-xs font-medium uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+                {{#if template.isHomepage}}Overview{{else}}{{#if template.isItem}}Specimen{{else}}Reference{{/if}}{{/if}}
+              </div>
+              <div class="truncate text-sm font-semibold text-neutral-950 dark:text-neutral-50">{{options.title}}</div>
+            </div>
+
+            <button class="inline-flex h-10 items-center gap-2 rounded-md border border-neutral-200 bg-white px-3 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800" type="button" data-kss-theme-toggle aria-label="Toggle color theme">
+              <span class="kss-theme-sun">{{{icon "sun" "size-4"}}}</span>
+              <span class="kss-theme-moon hidden">{{{icon "moon" "size-4"}}}</span>
+              <span class="hidden sm:inline" data-kss-theme-label>Theme</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="mx-auto grid max-w-[118rem] gap-8 px-4 py-8 lg:grid-cols-[minmax(0,1fr)_17rem] lg:px-8 xl:gap-10">
+          <article class="min-w-0">
+            {{#if template.isHomepage}}
+              <section class="mb-8 rounded-lg border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+                <div class="flex flex-wrap items-start justify-between gap-5">
+                  <div class="max-w-3xl">
+                    <p class="text-sm font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300">Documentation</p>
+                    <h1 class="mt-2 text-3xl font-semibold tracking-normal text-neutral-950 dark:text-white sm:text-4xl">{{options.title}}</h1>
+                    <p class="mt-3 text-base leading-7 text-neutral-600 dark:text-neutral-300">A generated API reference for the Stylus testing helpers, organized from KSS comments in the source.</p>
+                  </div>
+                  <dl class="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+                    <div class="kss-stat">
+                      <dt>Sections</dt>
+                      <dd>{{styleGuideStats.sections}}</dd>
+                    </div>
+                    <div class="kss-stat">
+                      <dt>Groups</dt>
+                      <dd>{{styleGuideStats.roots}}</dd>
+                    </div>
+                    <div class="kss-stat">
+                      <dt>Examples</dt>
+                      <dd>{{styleGuideStats.examples}}</dd>
+                    </div>
+                    <div class="kss-stat">
+                      <dt>Params</dt>
+                      <dd>{{styleGuideStats.parameters}}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </section>
+
+              {{#if homepage}}
+                <section id="kssref-0" class="kss-section rounded-lg border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900" data-kss-section data-kss-section-text="Overview {{options.title}}">
+                  <div class="kss-prose">
+                    {{{homepage}}}
+                  </div>
+                </section>
+              {{/if}}
+
+              <section class="mt-8">
+                <h2 class="text-lg font-semibold text-neutral-950 dark:text-white">Reference groups</h2>
+                <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {{#each menu}}
+                    <a class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-teal-600" href="section-{{referenceURI}}.html">
+                      <span class="text-xs font-semibold text-teal-700 dark:text-teal-300">{{referenceNumber}}</span>
+                      <span class="mt-1 block font-semibold text-neutral-950 dark:text-white">{{header}}</span>
+                      <span class="mt-2 block text-sm text-neutral-500 dark:text-neutral-400">{{children.length}} documented entries</span>
+                    </a>
+                  {{/each}}
+                </div>
+              </section>
+            {{else}}
+              {{#each sections}}
+                <section id="kssref-{{referenceURI}}" class="kss-section scroll-mt-24 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 sm:p-6 {{#unless @first}}mt-6{{/unless}}" data-kss-section data-kss-section-text="{{plain header}} {{plain description}} {{referenceNumber}}">
+                  <div class="flex flex-wrap items-start justify-between gap-4">
+                    <div class="min-w-0">
+                      <div class="flex flex-wrap items-center gap-2">
+                        <a class="inline-flex items-center gap-1 rounded-md bg-neutral-100 px-2 py-1 text-xs font-semibold text-neutral-700 hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700" href="#kssref-{{referenceURI}}">
+                          <span>{{referenceNumber}}</span>
+                          {{{icon "link" "size-3"}}}
+                        </a>
+                        {{#if deprecated}}
+                          <span class="kss-badge kss-badge-danger">Deprecated</span>
+                        {{/if}}
+                        {{#if experimental}}
+                          <span class="kss-badge kss-badge-warning">Experimental</span>
+                        {{/if}}
+                        {{#if (includes description "[private")}}
+                          <span class="kss-badge kss-badge-muted">Private</span>
+                        {{else}}
+                          <span class="kss-badge kss-badge-success">Public</span>
+                        {{/if}}
+                      </div>
+                      <h2 class="mt-3 break-words text-2xl font-semibold tracking-normal text-neutral-950 dark:text-white">{{header}}</h2>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                      {{#unless @root.template.isItem}}
+                        <a class="kss-icon-button" href="item-{{referenceURI}}.html" target="_blank" rel="noreferrer" aria-label="Open item page">
+                          {{{icon "external-link" "size-4"}}}
+                        </a>
+                      {{/unless}}
+                    </div>
+                  </div>
+
+                  {{#if description}}
+                    <div class="kss-prose mt-4">
+                      {{{description}}}
+                    </div>
+                  {{else}}
+                    <p class="mt-4 text-sm text-neutral-500 dark:text-neutral-400">No description provided.</p>
+                  {{/if}}
+
+                  {{#if parameters}}
+                    <div class="mt-5 overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800">
+                      <div class="border-b border-neutral-200 bg-neutral-50 px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400">Parameters</div>
+                      <div class="scrollbar overflow-x-auto">
+                        <table class="min-w-full divide-y divide-neutral-200 text-sm dark:divide-neutral-800">
+                          <thead class="bg-neutral-50 dark:bg-neutral-950">
+                            <tr>
+                              <th class="px-4 py-3 text-left font-semibold text-neutral-700 dark:text-neutral-200">Name</th>
+                              <th class="px-4 py-3 text-left font-semibold text-neutral-700 dark:text-neutral-200">Description</th>
+                              <th class="px-4 py-3 text-left font-semibold text-neutral-700 dark:text-neutral-200">Default</th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
+                            {{#each parameters}}
+                              <tr>
+                                <td class="whitespace-nowrap px-4 py-3 align-top"><code class="kss-inline-code">{{name}}</code></td>
+                                <td class="px-4 py-3 align-top text-neutral-600 dark:text-neutral-300">{{{description}}}</td>
+                                <td class="whitespace-nowrap px-4 py-3 align-top text-neutral-500 dark:text-neutral-400">{{#if defaultValue}}<code class="kss-inline-code">{{defaultValue}}</code>{{else}}-{{/if}}</td>
+                              </tr>
+                            {{/each}}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  {{/if}}
+
+                  {{#if colors}}
+                    <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                      {{#each colors}}
+                        <figure class="overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800">
+                          <div class="h-16" style="background-color: {{color}}"></div>
+                          <figcaption class="bg-neutral-50 p-3 text-sm dark:bg-neutral-950">
+                            <strong class="block text-neutral-900 dark:text-neutral-100">{{name}}</strong>
+                            <code class="mt-1 block text-neutral-500 dark:text-neutral-400">{{color}}</code>
+                            {{#if description}}<p class="mt-2 text-neutral-600 dark:text-neutral-300">{{description}}</p>{{/if}}
+                          </figcaption>
+                        </figure>
+                      {{/each}}
+                    </div>
+                  {{/if}}
+
+                  {{#if example}}
+                    <div class="mt-5 overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800">
+                      <div class="flex items-center justify-between gap-3 border-b border-neutral-200 bg-neutral-50 px-4 py-3 dark:border-neutral-800 dark:bg-neutral-950">
+                        <h3 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100">Example{{#if modifiers}}s{{/if}}</h3>
+                        <button class="kss-icon-button" type="button" data-kss-guides-toggle aria-label="Toggle example guides">
+                          {{{icon "ruler" "size-4"}}}
+                        </button>
+                      </div>
+                      <div class="kss-example scrollbar">
+                        {{{example}}}
+                      </div>
+
+                      {{#each modifiers}}
+                        <div class="border-t border-neutral-200 px-4 py-3 dark:border-neutral-800">
+                          <div class="flex flex-wrap items-baseline gap-2">
+                            <code class="kss-inline-code">{{name}}</code>
+                            <span class="text-sm text-neutral-600 dark:text-neutral-300">{{{description}}}</span>
+                          </div>
+                        </div>
+                        <div class="kss-example scrollbar">
+                          {{{markup}}}
+                        </div>
+                      {{/each}}
+                    </div>
+                  {{/if}}
+
+                  {{#if markup}}
+                    <details class="mt-5 overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800">
+                      <summary class="flex cursor-pointer list-none items-center justify-between gap-3 bg-neutral-50 px-4 py-3 text-sm font-semibold text-neutral-900 marker:hidden dark:bg-neutral-950 dark:text-neutral-100">
+                        <span class="inline-flex items-center gap-2">
+                          {{{icon "code-2" "size-4 text-teal-700 dark:text-teal-300"}}}
+                          {{#if markupFile}}Markup: <code class="kss-inline-code">{{markupFile}}</code>{{else}}Markup{{/if}}
+                        </span>
+                        <button class="kss-icon-button" type="button" data-kss-copy-id="kss-markup-{{referenceURI}}" aria-label="Copy markup">
+                          {{{icon "copy" "size-4"}}}
+                        </button>
+                      </summary>
+                      <pre class="kss-code-block scrollbar"><code id="kss-markup-{{referenceURI}}" class="language-handlebars">{{{hljs markup "handlebars"}}}</code></pre>
+                    </details>
+                  {{/if}}
+
+                  {{#if source.filename}}
+                    <footer class="mt-5 flex flex-wrap items-center gap-2 border-t border-neutral-200 pt-4 text-xs text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
+                      {{{icon "file-code-2" "size-4"}}}
+                      <span>Source</span>
+                      <code class="kss-inline-code">{{source.filename}}:{{source.line}}</code>
+                    </footer>
+                  {{/if}}
+                </section>
+              {{/each}}
+            {{/if}}
+          </article>
+
+          <aside class="hidden lg:block">
+            <div class="sticky top-24 space-y-5">
+              {{#unless template.isHomepage}}
+                <nav class="rounded-lg border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900" aria-label="Current page sections">
+                  <h2 class="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">On this page</h2>
+                  <div class="mt-3 space-y-1" data-kss-page-toc>
+                    {{#each sections}}
+                      <a class="kss-toc-link" href="#kssref-{{referenceURI}}" data-kss-toc-link="kssref-{{referenceURI}}">
+                        <span class="font-mono text-[0.72rem] text-neutral-400">{{referenceNumber}}</span>
+                        <span class="truncate">{{header}}</span>
+                      </a>
+                    {{/each}}
+                  </div>
+                </nav>
+              {{/unless}}
+
+              <div class="rounded-lg border border-neutral-200 bg-white p-4 text-sm shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+                <h2 class="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">Build</h2>
+                <dl class="mt-3 space-y-2">
+                  <div class="flex justify-between gap-3">
+                    <dt class="text-neutral-500 dark:text-neutral-400">Generator</dt>
+                    <dd class="font-medium text-neutral-900 dark:text-neutral-100">kss-node</dd>
+                  </div>
+                  <div class="flex justify-between gap-3">
+                    <dt class="text-neutral-500 dark:text-neutral-400">Theme</dt>
+                    <dd class="font-medium text-neutral-900 dark:text-neutral-100">Tailwind</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <script src="kss-assets/kss-theme.js"></script>
+    {{{scripts}}}
+  </body>
+</html>
